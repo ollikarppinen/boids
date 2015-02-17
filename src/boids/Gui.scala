@@ -1,0 +1,5 @@
+package boids
+
+object Gui {
+
+}
