@@ -13,6 +13,5 @@ object Gui extends SimpleSwingApplication{
       layout(SettingsPanel) = East
     }
   }
-  
 }
 

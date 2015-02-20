@@ -4,14 +4,13 @@ import scala.util.Random
 
 object simulation extends Runnable {
 	val r = new Random
-	val flock = Vector.fill[Boid](10)(new Boid(Vector(r.nextInt(501), r.nextInt(501)), Vector(1)))
-
+	var flock = Vector.fill[Boid](100)(new Boid(Vector(r.nextInt(501), r.nextInt(501)), Vector( r.nextInt(3) + r.nextFloat() - 2,  r.nextInt(3) + r.nextFloat() - 2)))
   def run(): Unit = {
     while (true) {
       val start = System.currentTimeMillis()
-      flock.foreach(_.move)
+      flock = flock.map(_.move)
       SimulationPanel.repaint()
-      Thread.sleep(start + 5 - System.currentTimeMillis())
+//      Thread.sleep(start + 100 - System.currentTimeMillis())
     }
   }
 
