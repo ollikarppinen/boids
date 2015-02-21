@@ -7,10 +7,10 @@ import java.awt.Color
 object Gui extends SimpleSwingApplication{
   val top = new MainFrame {
     title = "Boid simulation"
-    background = Color.red
+    resizable = false
     contents = new BorderPanel {
       layout(SimulationPanel) = Center
-      layout(SettingsPanel) = East
+//      layout(SettingsPanel) = East
     }
   }
 }

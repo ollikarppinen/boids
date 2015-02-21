@@ -14,7 +14,7 @@ class Boid(val position: Vector[Float], val velocity: Vector[Float]) {
   def multiply(a: Vector[Float], m: Float) = Vector(a(0) * m, a(1) * m)
 
   def move: Boid = {
-    val nearbyBoids: Vector[Boid] = simulation.flock.filter(b => distance(this.position, b.position) < 20 && distance(this.position, b.position) > 0) // this is bad. FIX THIS!
+    val nearbyBoids = simulation.flock.filter(b => distance(this.position, b.position) < 50 && distance(this.position, b.position) > 0) // this is bad. FIX THIS!
     if (nearbyBoids.size > 0) {
       val separationVector = nearbyBoids.map(b => multiply(normalize(substract(this.position, b.position)), 20 / distance(this.position, b.position))).fold(Vector[Float](0, 0))(sum(_, _))
       val cohesionVector = substract(nearbyBoids.map(b => multiply(b.position, 1.toFloat / nearbyBoids.size)).fold(Vector[Float](0, 0))(sum(_, _)), this.position)
@@ -24,9 +24,9 @@ class Boid(val position: Vector[Float], val velocity: Vector[Float]) {
       val acceleration = steeringForce.map(_ / mass)
       val newVelocity = truncate(sum(velocity, acceleration), maxSpeed)
       val newPosition = sum(position, newVelocity).map(p => if (p < 0) (p + 500) % 500 else p % 500)
-      println("Separation: " + separationVector.mkString("(", ", ", ")"))
-      println("Cohesion: " + cohesionVector.mkString("(", ", ", ")"))
-      println("Alignment: " + alignmentVector.mkString("(", ", ", ")"))
+//      println("Separation: " + separationVector.mkString("(", ", ", ")"))
+//      println("Cohesion: " + cohesionVector.mkString("(", ", ", ")"))
+//      println("Alignment: " + alignmentVector.mkString("(", ", ", ")"))
       new Boid(newPosition, newVelocity)
     } else {
       new Boid(sum(position, velocity).map(p => if (p < 0) (p + 500) % 500 else p % 500), velocity) //copy paste from row 26 BAD
