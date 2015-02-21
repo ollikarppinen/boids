@@ -18,7 +18,7 @@ object SimulationPanel extends Panel {
 
     def drawBoid(b: Boid) = {
     	g.setColor(Color.white)
-      g.drawOval(b.getX - 6, b.getY - 6, 5, 5)   
+      g.drawOval(b.position(0).toInt - 6, b.position(1).toInt - 6, 5, 5)   
     }
     simulation.flock.foreach(b => drawBoid(b))
   }
