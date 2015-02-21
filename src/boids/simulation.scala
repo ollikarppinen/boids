@@ -6,11 +6,19 @@ object simulation extends Runnable {
 	val r = new Random
 	var flock = Vector.fill[Boid](50)(new Boid(Vector(r.nextInt(501), r.nextInt(501)), Vector( r.nextInt(3) + r.nextFloat() - 2,  r.nextInt(3) + r.nextFloat() - 2)))
   def run(): Unit = {
-    while (true) {
+    var end = System.currentTimeMillis()
+    var lag = 0.0
+    while (true) { // This is the simulation loop
       val start = System.currentTimeMillis()
-      flock = flock.map(_.move)
+      val elapsed = start - end
+      end = start
+      lag += elapsed
+      while (lag >= 20) {
+    	  flock = flock.map(_.move)     
+        lag -= 20
+      }
       SimulationPanel.repaint()
-//      Thread.sleep(start + 100 - System.currentTimeMillis())
+//      Thread.sleep(start + 15 - System.currentTimeMillis()) 
     }
   }
 
