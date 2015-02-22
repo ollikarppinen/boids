@@ -9,5 +9,4 @@ object SettingsPanel extends FlowPanel {
   contents += new Label {
     text = "Settings"
   }
-
 }

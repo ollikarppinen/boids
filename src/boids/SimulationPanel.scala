@@ -2,31 +2,16 @@ package boids
 
 import scala.swing.Panel
 import java.awt.{ Graphics2D, Color, Dimension }
-//import java.awt.RadialGradientPaint
-//import java.awt.geom.Ellipse2D
 
 object SimulationPanel extends Panel {
-  preferredSize = new Dimension(501, 501)
+  preferredSize = new Dimension(500, 500)
   opaque = true
   background = Color.black
   override def paintComponent(g: Graphics2D) {
     super.paintComponent(g)
-//    g.setColor(Color.darkGray)
-//    
-//    for (x <- 0 to 50; y <- 0 to 50) { // draws the grid
-//      g.drawLine(0, x * 10, 500, x * 10)
-//      g.drawLine(x * 10, 0, x * 10, 500)
-//    }
-
     def drawBoid(b: Boid) = {
-      val x = b.position(0).toInt
-      val y = b.position(1).toInt
-//      val rgp = new RadialGradientPaint(x, y, 2, Array(0, 1), Array(Color.white, Color.gray))
-//      g.setPaint(rgp)
-//      val halo = new Ellipse2D.Float(2, 2, x, y)
-//      g.fill(halo)
       g.setColor(Color.white)
-      g.drawOval(x, y, 1, 1)
+      g.drawOval(b.position(0).toInt, b.position(1).toInt, 1, 1)
     }
     simulation.flock.foreach(b => drawBoid(b))
   }
