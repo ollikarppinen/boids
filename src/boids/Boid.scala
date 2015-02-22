@@ -3,6 +3,7 @@ package boids
 import scala.math._
 
 class Boid(val position: Vector[Float], val velocity: Vector[Float]) {
+  val distance = 10000
   val mass = 200
   val maxForce = 2
   val maxSpeed = 1
@@ -14,11 +15,8 @@ class Boid(val position: Vector[Float], val velocity: Vector[Float]) {
   def multiply(a: Vector[Float], m: Float) = Vector(a(0) * m, a(1) * m)
 
   def move: Boid = {
-    def isBoidClose(b: Boid) = {
-      val d = substract(this.position, b.position)
-      d(0) * d(0) + d(1) + d(1) < 50 * 50 && d(0) != 0 && d(1) != 0
-    }
-    val nearbyBoids = simulation.flock.filter(isBoidClose(_))
+    val nearbyBoids = simulation.flock.filter(a => substract(this.position, a.position).reduce((b, c) => b * b + c * c) < distance && a != this)
+//    val nearbyBoids = simulation.flock.filter(b => distance(this.position, b.position) < 100 && b != this)
     if (nearbyBoids.size > 0) {
       val separationVector = nearbyBoids.map(b => multiply(normalize(substract(this.position, b.position)), 10 / distance(this.position, b.position))).fold(Vector[Float](0, 0))(sum(_, _))
       val cohesionVector = substract(nearbyBoids.map(b => multiply(b.position, 1.toFloat / nearbyBoids.size)).fold(Vector[Float](0, 0))(sum(_, _)), this.position)
