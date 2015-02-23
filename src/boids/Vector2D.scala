@@ -3,9 +3,10 @@ package boids
 case class Vector2D(x: Float, y: Float) {
 
   def +(v: Vector2D) = Vector2D(x + v.x, y + v.y)
-  def *(f: Float) = Vector2D(x * f, y * f)
   def -(v: Vector2D) = Vector2D(x - v.x, y - v.y)
-  def <(f: Float) = sqr < f
+  def *(f: Float) = Vector2D(x * f, y * f)
+  def /(f: Float) = this * (1f / f)
+  def <(f: Float) = sqr < f // Compares vector length to f. Returns true if vector is shorter.
 
   lazy val sqr = x * x + y * y // Returns square of the coordinates
   def transfix(v: Vector2D) = Vector2D(if (x - v.x > 250) v.x + 500 else if (x - v.x < -250) v.x - 500 else v.x, // Returns transfixed coordinates
