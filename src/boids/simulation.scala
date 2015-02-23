@@ -1,16 +1,19 @@
 package boids
 
-import scala.util.Random
-
 object Simulation extends Runnable {
-	val size = 100 // number of boids
-  val boidDistance = 100
-  val boidMass = 10
+  val size = 100 // number of boids
+  val mass = 10
+  val boidDistance = 10000
+  val boidMass = 1f / mass
   val boidMaxForce = 5
   val boidMaxSpeed = 1
-  
-  val r = new Random
-  var flock = Vector.fill[Boid](size)(new Boid(Vector(r.nextInt(501), r.nextInt(501)), Vector(r.nextInt(3) + r.nextFloat() - 2, r.nextInt(3) + r.nextFloat() - 2))).par
+
+  // Weights for the different rules
+  val s = 1.0f
+  val c = 1.0f
+  val a = 1.0f
+
+  var flock = Vector.fill[Boid](size)(Boid.generateBoid).par
   def run(): Unit = {
     while (true) { // simple simulation loop
       flock = flock.map(_.move)

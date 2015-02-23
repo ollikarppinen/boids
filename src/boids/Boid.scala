@@ -1,38 +1,37 @@
 package boids
 
 import scala.math._
+import scala.util.Random
 
-class Boid(val position: Vector[Float], val velocity: Vector[Float]) {
-
+object Boid {
   val distance = Simulation.boidDistance
-  val mass = Simulation.boidMass
+  val mass = Simulation.boidMass // Inverse of mass
   val maxForce = Simulation.boidMaxForce
   val maxSpeed = Simulation.boidMaxSpeed
+  val r = new Random
+  def generateBoid: Boid = {
+    new Boid(Vector2D(r.nextInt(501),
+      r.nextInt(501)),
+      Vector2D(r.nextInt(3) + r.nextFloat() - 2, r.nextInt(3) + r.nextFloat() - 2))
+  }
+}
 
-  def distance(a: Vector[Float], b: Vector[Float]): Float = sqrt(pow(a(0) - b(0), 2) + pow(a(1) - b(1), 2)).toFloat
-  def normalize(v: Vector[Float]) = v.map(_ / distance(v, Vector(0, 0))) //normalizes a Vector. Does not handle 0 distance. !!!
-  def substract(a: Vector[Float], b: Vector[Float]) = Vector(a(0) - b(0), a(1) - b(1))
-  def sum(a: Vector[Float], b: Vector[Float]): Vector[Float] = Vector(a(0) + b(0), a(1) + b(1))
-  def truncate(a: Vector[Float], d: Float) = if (distance(a, Vector(0, 0)) > d) normalize(a).map(_ * d) else a
-  def multiply(a: Vector[Float], m: Float) = Vector(a(0) * m, a(1) * m)
-
+class Boid(val position: Vector2D, val velocity: Vector2D) {
   def move: Boid = {
-    val nearbyBoids = Simulation.flock.filter(a => substract(this.position, a.position).reduce((b, c) => b * b + c * c) < distance && a != this)
+    val nearbyBoids = Simulation.flock.filter(b => this.position - b.position < Boid.distance && b != this)
     if (nearbyBoids.size > 0) {
-      val separationVector = nearbyBoids.map(b => multiply(normalize(substract(this.position, b.position)), 10 / distance(this.position, b.position))).fold(Vector[Float](0, 0))(sum(_, _))
-      val cohesionVector = substract(nearbyBoids.map(b => multiply(b.position, 1.toFloat / nearbyBoids.size)).fold(Vector[Float](0, 0))(sum(_, _)), this.position)
-      val alignmentVector = nearbyBoids.map(_.velocity).fold(Vector[Float](0, 0))(sum(_, _)).map(_ / nearbyBoids.size)
-      val steeringDirection = sum(sum(separationVector, cohesionVector), alignmentVector)
-      val steeringForce = truncate(steeringDirection, maxForce)
-      val acceleration = steeringForce.map(_ / mass)
-      val newVelocity = truncate(sum(velocity, acceleration), maxSpeed)
-      val newPosition = sum(position, newVelocity).map(p => if (p < 0) (p + 500) % 500 else p % 500)
-      //      println("Separation: " + separationVector.mkString("(", ", ", ")"))
-      //      println("Cohesion: " + cohesionVector.mkString("(", ", ", ")"))
-      //      println("Alignment: " + alignmentVector.mkString("(", ", ", ")"))
+      val separation = nearbyBoids.map(b => (this.position - b.position) * this.position.inverseDistance(b.position)).reduce(_ + _)
+      val cohesion = this.position - nearbyBoids.map(_.position * (1f / nearbyBoids.size)).reduce(_ + _)
+      val alignment = nearbyBoids.map(_.velocity * (1f / nearbyBoids.size)).reduce(_ + _)
+      val acceleration = (separation * Simulation.s + cohesion * Simulation.c + alignment * Simulation.a).truncate(Boid.maxForce) * Boid.mass
+      val newVelocity = (velocity + acceleration).truncate(Boid.maxSpeed)
+      val newPosition = (position + newVelocity).bound
+      println("separation: " + separation)
+      println("cohesion: " + cohesion)
+      println("alignment: " + alignment)
       new Boid(newPosition, newVelocity)
     } else {
-      new Boid(sum(position, velocity).map(p => if (p < 0) (p + 500) % 500 else p % 500), velocity) //copy paste from row 26 BAD
+      new Boid((position + velocity).bound, velocity)
     }
   }
 }
