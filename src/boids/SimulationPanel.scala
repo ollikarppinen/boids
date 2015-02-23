@@ -2,7 +2,6 @@ package boids
 
 import scala.swing.Panel
 import java.awt.{ Graphics2D, Color, Dimension, RenderingHints }
-import scala.math._
 
 object SimulationPanel extends Panel {
   preferredSize = new Dimension(500, 500)
