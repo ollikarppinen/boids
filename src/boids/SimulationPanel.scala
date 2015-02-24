@@ -6,13 +6,13 @@ import java.awt.{ Graphics2D, Color, Dimension, RenderingHints }
 object SimulationPanel extends Panel {
   preferredSize = new Dimension(1000, 1000)
   opaque = true
-  background = Color.black
+  background = new Color(80, 180, 235)
   override def paintComponent(g: Graphics2D) {
     super.paintComponent(g)
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
     def drawBoid(b: Boid) = {
       g.setColor(Color.white)
-      val polygonVector = b.velocity.normalize * 3
+      val polygonVector = b.velocity.normalize * 5
       val inversePolygonVector = polygonVector * -1
       val scaledPosition = b.position * 2
       val polygonVectors = Vector(scaledPosition + polygonVector, 
