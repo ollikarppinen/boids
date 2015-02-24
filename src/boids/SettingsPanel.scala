@@ -4,7 +4,7 @@ import scala.swing._
 import java.awt.{ Graphics2D, Color, Dimension }
 
 object SettingsPanel extends FlowPanel {
-  background = Color.white
+  background = new Color(238, 238, 238)
   
   preferredSize = new Dimension(200, 1000)
   contents += new Label {
