@@ -4,9 +4,9 @@ import scala.util.Random
 
 object Boid {
   val mass = 100 // Mass of one boid
-  val distance = 4000 // Max distance that boids affect each others
+  val distance = 1000 // Max distance that boids affect each others
   val maxForce = 5 // Max length for the acceleration vector
-  val maxSpeed = 1 // Max speed that boid moves in one simulation step
+  val maxSpeed = 2 // Max speed that boid moves in one simulation step
   val r = new Random
   def doBoid: Boid = {
     new Boid(Vector2D(r.nextInt(501),

@@ -4,7 +4,7 @@ import scala.swing.Panel
 import java.awt.{ Graphics2D, Color, Dimension, RenderingHints }
 
 object SimulationPanel extends Panel {
-  preferredSize = new Dimension(500, 500)
+  preferredSize = new Dimension(1000, 1000)
   opaque = true
   background = Color.black
   override def paintComponent(g: Graphics2D) {
@@ -12,7 +12,16 @@ object SimulationPanel extends Panel {
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
     def drawBoid(b: Boid) = {
       g.setColor(Color.white)
-      g.drawOval(b.position.x.toInt, b.position.y.toInt, 1, 1)
+      val polygonVector = b.velocity.normalize * 3
+      val inversePolygonVector = polygonVector * -1
+      val scaledPosition = b.position * 2
+      val polygonVectors = Vector(scaledPosition + polygonVector, 
+                                  scaledPosition + inversePolygonVector + inversePolygonVector.rotate, 
+                                  scaledPosition, 
+                                  scaledPosition + inversePolygonVector - inversePolygonVector.rotate)
+      val x = polygonVectors.map(i => math.max(i.x, 0).toInt).toArray
+      val y = polygonVectors.map(i => math.max(i.y, 0).toInt).toArray
+      g.fillPolygon(x, y, 4)
     }
     Simulation.flock.foreach(b => drawBoid(b))
   }
