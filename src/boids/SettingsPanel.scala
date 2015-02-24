@@ -26,8 +26,6 @@ object SettingsPanel extends FlowPanel {
     min = 1
     max = 200
     value = 10
-    majorTickSpacing = 10
-    paintTicks = true
     minimumSize = new Dimension(200, 300)
   }
   contents += distanceSlider
@@ -38,8 +36,6 @@ object SettingsPanel extends FlowPanel {
     min = 1
     max = 100
     value = 10
-    majorTickSpacing = 10
-    paintTicks = true
     minimumSize = new Dimension(200, 300)
   }
   contents += maxForceSlider
@@ -50,8 +46,6 @@ object SettingsPanel extends FlowPanel {
     min = 1
     max = 100
     value = 10
-    majorTickSpacing = 10
-    paintTicks = true
     minimumSize = new Dimension(200, 300)
   }
   contents += maxSpeedSlider

@@ -33,7 +33,6 @@ object Gui extends SimpleSwingApplication {
     }
     case ValueChanged(source) => {
       val slider = source.asInstanceOf[Slider]
-      if (!slider.adjusting) {
         slider match {
           case SettingsPanel.massSlider      => Boid.mass       = slider.value
           case SettingsPanel.distanceSlider  => Boid.distance   = slider.value * slider.value
@@ -41,7 +40,6 @@ object Gui extends SimpleSwingApplication {
           case SettingsPanel.maxSpeedSlider  => Boid.maxSpeed   = slider.value
           case SettingsPanel.flockSizeSlider => Simulation.size = slider.value
         }
-      }
     }
   }
 }
