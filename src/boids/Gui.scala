@@ -21,7 +21,6 @@ object Gui extends SimpleSwingApplication {
            SettingsPanel.maxForceSlider,
            SettingsPanel.maxSpeedSlider,
            SettingsPanel.flockSizeSlider)
-
   reactions += {
     case ButtonClicked(source) => {
       val button = source.asInstanceOf[Button]

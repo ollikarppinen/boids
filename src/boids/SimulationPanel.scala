@@ -25,8 +25,9 @@ object SimulationPanel extends Panel {
     }
     Simulation.flock.foreach(b => drawBoid(b))
   }
-  
-  var running = true // flag to see if simulation is running
+  var t = new Thread(Simulation)
+  t.start()
+  var running = true
   def pause() = {
     if (running) {
       running = false
@@ -37,6 +38,4 @@ object SimulationPanel extends Panel {
       t.start()
     }
   }
-  var t = new Thread(Simulation)
-  t.start()
 }
