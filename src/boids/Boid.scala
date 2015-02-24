@@ -3,10 +3,10 @@ package boids
 import scala.util.Random
 
 object Boid {
-  val mass = 10 // Mass of one boid
-  val distance = 900 // Max distance that boids affect each others
-  val maxForce = 3f // Max length for the acceleration vector
-  val maxSpeed = 2f // Max speed that boid moves in one simulation step
+  var mass = 10 // Mass of one boid
+  var distance = 900 // Max distance that boids affect each others
+  var maxForce = 3f // Max length for the acceleration vector
+  var maxSpeed = 2f // Max speed that boid moves in one simulation step
   val r = new Random
   def doBoid: Boid = {
     new Boid(Vector2D(r.nextInt(501),
