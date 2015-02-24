@@ -5,7 +5,7 @@ import java.awt.{ Graphics2D, Color, Dimension }
 
 object SettingsPanel extends FlowPanel {
   background = Color.white
-  preferredSize = new Dimension(200, 1000)
+    preferredSize = new Dimension(200, 1000)
   
   val massSlider = new Slider {
     orientation = Orientation.Horizontal

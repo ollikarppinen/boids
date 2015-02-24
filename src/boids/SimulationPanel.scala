@@ -13,7 +13,7 @@ object SimulationPanel extends Panel {
     def drawBoid(b: Boid) = {
       g.setColor(Color.white)
       val polygonVector = b.velocity.normalize * 5
-      val inversePolygonVector = polygonVector * -1
+      val inversePolygonVector = polygonVector * - 1
       val scaledPosition = b.position * 2
       val polygonVectors = Vector(scaledPosition + polygonVector, 
                                   scaledPosition + inversePolygonVector + inversePolygonVector.rotate, 
@@ -37,5 +37,10 @@ object SimulationPanel extends Panel {
       t = new Thread(Simulation)
       t.start()
     }
+  }
+  def restart() = {
+    if (running) pause()
+    Simulation.flock = Simulation.generateFlock(Simulation.size)
+    if (!running) pause()
   }
 }

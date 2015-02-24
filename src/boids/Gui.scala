@@ -13,7 +13,6 @@ object Gui extends SimpleSwingApplication {
       layout(SettingsPanel) = East
     }
   }
-  var running = true
   listenTo(SettingsPanel.massSlider,
            SettingsPanel.pauseButton,
            SettingsPanel.restartButton,
@@ -26,7 +25,7 @@ object Gui extends SimpleSwingApplication {
       val button = source.asInstanceOf[Button]
       button match {
         case SettingsPanel.pauseButton   => SimulationPanel.pause()
-        case SettingsPanel.restartButton => Simulation.restart()
+        case SettingsPanel.restartButton => SimulationPanel.restart()
       }
     }
     case ValueChanged(source) => {
