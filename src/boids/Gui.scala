@@ -9,6 +9,7 @@ object Gui extends SimpleSwingApplication {
     resizable = true
     contents = new BorderPanel {
       layout(SimulationPanel) = Center
+      layout(SettingsPanel) = East
     }
   }
 }
