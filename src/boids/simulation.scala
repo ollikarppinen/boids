@@ -8,7 +8,6 @@ object Simulation extends Runnable {
     while (true) { // simulation loop
       val t = System.currentTimeMillis()
       flock = flock.map(_.move)
-      SimulationPanel.repaint()
       val w = t + 30 - System.currentTimeMillis()
       if (flock.size != size) { // Checks that if size has been changed (through settings) and then resizes flock
         if (flock.size < size) {
@@ -18,6 +17,7 @@ object Simulation extends Runnable {
         }
       }
       Thread.sleep(if (w > 0) w else 0)
+      SimulationPanel.repaint()
     }
   }
 }
