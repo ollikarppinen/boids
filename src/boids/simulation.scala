@@ -9,7 +9,7 @@ object Simulation extends Runnable {
       val t = System.currentTimeMillis()
       flock = flock.map(_.move)
       SimulationPanel.repaint()
-      val w = t + 40 - System.currentTimeMillis()
+      val w = t + 30 - System.currentTimeMillis()
       if (flock.size != size) { // Checks that if size has been changed (through settings) and then resizes flock
         if (flock.size < size) {
           flock = flock ++ generateFlock(size - flock.size)

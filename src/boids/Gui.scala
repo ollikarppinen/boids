@@ -1,17 +1,18 @@
 package boids
 
-import scala.swing._
-import scala.swing.BorderPanel.Position._
+import scala.swing. { SimpleSwingApplication, MainFrame, BorderPanel, Button, Slider }
 import scala.swing.event.{ ButtonClicked, ValueChanged}
 
 object Gui extends SimpleSwingApplication {
   val top = new MainFrame {
     title = "Boid simulation"
     resizable = false
+    
     contents = new BorderPanel {
-      layout(SimulationPanel) = Center
-      layout(SettingsPanel) = East
+      layout(SimulationPanel) = BorderPanel.Position.Center
+      layout(SettingsPanel) = BorderPanel.Position.East
     }
+    peer.setLocationRelativeTo(null)
   }
   listenTo(SettingsPanel.massSlider,
            SettingsPanel.pauseButton,
@@ -34,7 +35,7 @@ object Gui extends SimpleSwingApplication {
           case SettingsPanel.massSlider      => Boid.mass       = slider.value
           case SettingsPanel.distanceSlider  => Boid.distance   = slider.value * slider.value
           case SettingsPanel.maxForceSlider  => Boid.maxForce   = slider.value
-          case SettingsPanel.maxSpeedSlider  => Boid.maxSpeed   = slider.value
+          case SettingsPanel.maxSpeedSlider  => Boid.maxSpeed   = 0.1f * slider.value
           case SettingsPanel.flockSizeSlider => Simulation.size = slider.value
         }
     }
