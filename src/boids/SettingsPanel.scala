@@ -5,7 +5,7 @@ import java.awt.{ Graphics2D, Color, Dimension, Font, Component }
 import javax.swing.{ UIManager, Box }
 
 object SettingsPanel extends BoxPanel(Orientation.Vertical) {
-  val preferredFont = new Font("Bauhaus 93", Font.PLAIN, 16)
+  val preferredFont = new Font("Miriam Fixed", Font.PLAIN, 16)
   val preferredBackgroundColor = new Color(237, 237, 237)
   val preferredForegroundColor = new Color(100, 100, 100)
   background = preferredBackgroundColor
@@ -83,7 +83,7 @@ object SettingsPanel extends BoxPanel(Orientation.Vertical) {
   peer.add(Box.createVerticalStrut(20))
   contents += (restartButton)
   peer.add(Box.createVerticalStrut(20))
-  contents += (resetButton)
-  peer.add(Box.createVerticalStrut(20))
   contents += (randomButton)
+  peer.add(Box.createVerticalStrut(20))
+  contents += (resetButton)
 }

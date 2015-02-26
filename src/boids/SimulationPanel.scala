@@ -41,6 +41,6 @@ object SimulationPanel extends Panel {
   def restart() = {
     if (running) pause()
     Simulation.flock = Simulation.generateFlock(Simulation.size)
-    if (!running) pause()
+    pause()
   }
 }
