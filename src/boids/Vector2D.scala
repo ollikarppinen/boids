@@ -1,14 +1,15 @@
 package boids
 
-case class Vector2D(x: Float, y: Float) {
+case class Vector2D(x: Float, y: Float) {  // Class for the vector calculations.
 
+// Basic vector calculation operators.  
   def +(v: Vector2D) = Vector2D(x + v.x, y + v.y)
   def -(v: Vector2D) = Vector2D(x - v.x, y - v.y)
   def *(f: Float) = Vector2D(x * f, y * f)
   def /(f: Float) = this * (1f / f)
   def <(f: Float) = sqr < f // Compares vector length to f. Returns true if vector is shorter.
 
-  lazy val cs = math.cos(90.toRadians).toFloat
+  lazy val cs = math.cos(90.toRadians).toFloat  // Cs & sn turn 'this' vector 90 degrees. Used to calculate the corners of the polygon.
   lazy val sn = math.sin(90.toRadians).toFloat
   lazy val sqr = x * x + y * y // Returns square of the coordinates
 

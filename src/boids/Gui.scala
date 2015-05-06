@@ -4,17 +4,17 @@ import scala.swing.{ SimpleSwingApplication, MainFrame, BorderPanel, Button, Sli
 import scala.swing.event.{ ButtonClicked, ValueChanged }
 
 object Gui extends SimpleSwingApplication {
-  val top = new MainFrame {
+  val top = new MainFrame { // Creates the main window
     title = "Boid simulation"
     resizable = false
 
-    contents = new BorderPanel {
+    contents = new BorderPanel {     // Set the content of the main window
       layout(SimulationPanel) = BorderPanel.Position.Center
       layout(SettingsPanel) = BorderPanel.Position.East
     }
-    peer.setLocationRelativeTo(null)
+    peer.setLocationRelativeTo(null) // Window is opened in the center of screen
   }
-  listenTo(SettingsPanel.massSlider,
+  listenTo(SettingsPanel.massSlider, // Listen to every object in settings panel
     SettingsPanel.distanceSlider,
     SettingsPanel.maxForceSlider,
     SettingsPanel.maxSpeedSlider,
@@ -26,13 +26,13 @@ object Gui extends SimpleSwingApplication {
     SettingsPanel.restartButton,
     SettingsPanel.resetButton,
     SettingsPanel.randomButton)
-  reactions += {
+  reactions += {                    // Sets the reactions to the setting panel objects
     case ButtonClicked(source) => {
       val button = source.asInstanceOf[Button]
       button match {
         case SettingsPanel.pauseButton   => SimulationPanel.pause()
         case SettingsPanel.restartButton => SimulationPanel.restart()
-        case SettingsPanel.resetButton => {
+        case SettingsPanel.resetButton => {  // Simulation settings are reverted back to the original values
           SettingsPanel.massSlider.value = 1
           SettingsPanel.distanceSlider.value = 10
           SettingsPanel.maxForceSlider.value = 10
@@ -42,7 +42,7 @@ object Gui extends SimpleSwingApplication {
           SettingsPanel.cohesionSlider.value = 10
           SettingsPanel.alignmentSlider.value = 10
         }
-        case SettingsPanel.randomButton => {
+        case SettingsPanel.randomButton => {  // Simulation settings are set to random values
           val r = scala.util.Random
           def randomSliderValue(s: Slider) = s.min + r.nextInt(s.max - s.min)
           SettingsPanel.massSlider.value = randomSliderValue(SettingsPanel.massSlider)
@@ -56,7 +56,7 @@ object Gui extends SimpleSwingApplication {
         }
       }
     }
-    case ValueChanged(source) => {
+    case ValueChanged(source) => {            
       val slider = source.asInstanceOf[Slider]
       slider match {
         case SettingsPanel.massSlider      => Boid.mass = slider.value
