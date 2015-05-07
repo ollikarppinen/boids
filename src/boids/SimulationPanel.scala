@@ -8,7 +8,7 @@ object SimulationPanel extends Panel {  // The panel where the simulation is dra
   opaque = true
   background = new Color(80, 180, 235)
   
-  override def paintComponent(g: Graphics2D) {  // The method which handles the drawing of the boids.
+  override def paintComponent(g: Graphics2D) {
     super.paintComponent(g)
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) // AA is turned on.
     def drawBoid(b: Boid) = {                  // Method which draws a boid b in the simulation panel.
